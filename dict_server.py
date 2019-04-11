@@ -49,20 +49,38 @@ def main():
 		if pid ==0:
 			s.close()
 			print("子进程准备处理请求")
+			do_child(c)
 			sys.exit(0)
 		else:
 			c.close()
 			continue
-def do_child(c,db):
-	pass
 
-def do_login():
+def do_child(c):
+	try:
+		get = c.recv(32).decode()
+		if get == ('1' or '注册'):
+			do_login(c)
+		elif get == ('2' or '登录'):
+			do_register()
+		elif get == ('3' or '退出'):
+			do_query()
+		else:
+			c.send("Input Error".encode())
+	except Exception as e:
+		print(e)
+
+
+def do_login(c):
+	c.send("Please login in my id".encode())
 
 def do_register():
+	pass
 
 def do_query():
+	pass
 
-def do_host():
+def do_hist():
+	pass
 	
 
 if __name__ == '__main__':
